@@ -13,5 +13,7 @@ export default {
         pathname: '/s/files/**'
       }
     ]
-  }
+  },
+  // Deshabilitar temporalmente la generación estática para páginas que dependen de Shopify
+  trailingSlash: false
 };
