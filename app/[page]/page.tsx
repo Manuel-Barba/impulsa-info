@@ -1,8 +1,21 @@
 import type { Metadata } from 'next';
 
 import Prose from 'components/prose';
-import { getPage } from 'lib/shopify';
+import { getPage, getPages } from 'lib/shopify';
 import { notFound } from 'next/navigation';
+
+// Generar rutas estáticas para todas las páginas disponibles
+export async function generateStaticParams() {
+  try {
+    const pages = await getPages();
+    return pages.map((page) => ({
+      page: page.handle
+    }));
+  } catch (error) {
+    console.error('Error generating static params for pages:', error);
+    return [];
+  }
+}
 
 export async function generateMetadata(props: {
   params: Promise<{ page: string }>;
