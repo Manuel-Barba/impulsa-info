@@ -7,12 +7,25 @@ import { notFound } from 'next/navigation';
 // Generar rutas estáticas para todas las páginas disponibles
 export async function generateStaticParams() {
   try {
+    console.log('🔍 Iniciando generateStaticParams...');
+    
     const pages = await getPages();
-    return pages.map((page) => ({
+    console.log('📄 Páginas obtenidas de Shopify:', pages.length);
+    console.log('📋 Handles de páginas:', pages.map(p => p.handle));
+    
+    const params = pages.map((page) => ({
       page: page.handle
     }));
+    
+    console.log('✅ Parámetros generados:', params);
+    return params;
   } catch (error) {
-    console.error('Error generating static params for pages:', error);
+    console.error('❌ Error en generateStaticParams:', error);
+    console.error('🔧 Detalles del error:', {
+      message: error instanceof Error ? error.message : 'Error desconocido',
+      stack: error instanceof Error ? error.stack : 'No disponible',
+      name: error instanceof Error ? error.name : 'Error'
+    });
     return [];
   }
 }
